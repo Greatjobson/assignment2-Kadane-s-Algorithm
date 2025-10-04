@@ -122,24 +122,28 @@ public class PerformanceTracker {
     }
 
     /**
-     * Saves the performance metrics to a CSV file.
-     * Appends a new row with input size and all metrics.
+     * Saves performance metrics to a CSV file.
+     * Appends a new row with input size and all metrics. Adds header if the file is new.
      * @param filename the name of the CSV file
      * @param inputSize the size of the input (e.g., array length)
      */
     public void saveToCSV(String filename, int inputSize) {
-        try (FileWriter writer = new FileWriter(filename, true)) {
-            // Write header if file is new (you can check file existence separately if needed)
-            // For simplicity, assume header is added manually: size,comparisons,swaps,arrayAccesses,memoryAllocations,executionTimeNs
-            writer.append(String.format("%d,%d,%d,%d,%d,%d%n",
+        boolean isNewFile = !new java.io.File(filename).exists();
+        try (java.io.FileWriter writer = new java.io.FileWriter(filename, true)) {
+            // Add header if the file is new
+            if (isNewFile) {
+                writer.append("size,comparisons,swaps,arrayAccesses,memoryAllocations,executionTimeNs\n");
+            }
+            // Append data row with explicit newline
+            writer.append(String.format("%d,%d,%d,%d,%d,%d\n",
                     inputSize,
                     comparisons,
                     swaps,
                     arrayAccesses,
                     memoryAllocations,
                     getExecutionTime()));
-        } catch (IOException e) {
-            System.err.println("Error writing to CSV: " + e.getMessage());
+        } catch (java.io.IOException e) {
+            System.err.println("Error writing to CSV file '" + filename + "': " + e.getMessage());
         }
     }
 }
