@@ -22,6 +22,7 @@ public class KadanesAlgorithm {
         if (arr == null || arr.length == 0) {
             throw new IllegalArgumentException("Input array cannot be null or empty");
         }
+        tracker.reset();
         tracker.start(); //launching the tracker after checking the array
 
         int maxSoFar = arr[0];  // Maximum sum found so far
