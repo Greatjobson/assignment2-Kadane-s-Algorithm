@@ -18,10 +18,11 @@ public class KadanesAlgorithm {
      * @throws IllegalArgumentException if the input array is null or empty
      */
     public int[] findMaxSubarray(int[] arr) {
-        tracker.start();
+
         if (arr == null || arr.length == 0) {
             throw new IllegalArgumentException("Input array cannot be null or empty");
         }
+        tracker.start(); //launching the tracker after checking the array
 
         int maxSoFar = arr[0];  // Maximum sum found so far
         int maxEndingHere = arr[0];  // Maximum sum ending at current position

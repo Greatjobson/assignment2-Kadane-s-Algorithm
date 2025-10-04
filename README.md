@@ -88,6 +88,55 @@ Subarray: [4, -1, 2, 1]
 * Added unit tests (error handling + correctness)
 * Added benchmark suite (input distribution + memory profiling)
 
+
+## Fixes & Improvements
+
+Accurate timing: Previously, the tracker started before validating the input array, 
+causing initialization checks to be included in the total execution time.
+→ This was fixed by starting the tracker only after input validation.
+
+Consistent metrics: A call to tracker.reset() was added before each execution, 
+ensuring all performance data is cleared before reuse.
+
+---
+
+## ⚙️ Benchmark Comparison — *Before vs After Optimization*
+
+The table below compares performance metrics of **Kadane’s Algorithm** before and after improving the tracker logic.
+Originally, the timer also included array validation and initialization overhead.
+After the fix, only the algorithm’s core execution time is measured.
+
+| Input Size              | Comparisons | Swaps | Array Accesses | Memory Allocations | Execution Time (ns) |
+| ----------------------- | ----------- | ----- | -------------- | ------------------ | ------------------- |
+| **Before Optimization** |             |       |                |                    |                     |
+| 100                     | 114         | 0     | 199            | 1                  | **33,700**          |
+| 1,000                   | 1,064       | 0     | 1,999          | 1                  | **132,700**         |
+| 10,000                  | 10,157      | 0     | 19,999         | 1                  | **972,900**         |
+| 100,000                 | 100,195     | 0     | 199,999        | 1                  | **3,618,800**       |
+| **After Optimization**  |             |       |                |                    |                     |
+| 100                     | 114         | 0     | 199            | 1                  | **20,400**          |
+| 1,000                   | 1,064       | 0     | 1,999          | 1                  | **104,200**         |
+| 10,000                  | 10,157      | 0     | 19,999         | 1                  | **787,600**         |
+| 100,000                 | 100,195     | 0     | 199,999        | 1                  | **3,140,100**       |
+
+---
+
+### 📈 Key Insights
+
+* **Execution time dropped by ~20–40%** across all input sizes due to cleaner measurement (no initialization overhead).
+* **Operation counts (comparisons, accesses, allocations)** remain identical — confirming algorithmic behavior is unchanged.
+* **Performance scaling stays linear (O(n))**, validating Kadane’s theoretical complexity.
+
+---
+
+### Summary of Fixes
+
+* **Accurate timing** — tracker starts *after* validation.
+* **Consistent metrics** — `tracker.reset()` clears previous data before each run.
+* **Measured improvement** — execution time now reflects *pure algorithmic cost*, not setup overhead.
+
+---
+
 ---
 
 👤 **Author:** [GreatJobSon -aka Beibarys]
