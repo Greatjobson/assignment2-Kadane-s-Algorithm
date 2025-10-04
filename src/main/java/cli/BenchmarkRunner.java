@@ -65,17 +65,53 @@ public class BenchmarkRunner {
      * @param size the size of the input array
      */
     private static void runBenchmark(int size) {
-        // Generate random test array
-        int[] arr = generateRandomArray(size);
-        algorithms.KadanesAlgorithm algorithm = new algorithms.KadanesAlgorithm();
-        metrics.PerformanceTracker tracker = algorithm.getPerformanceTracker();
+        int[][] arrays = {
+                generateRandomArray(size),
+                generateSortedArray(size),
+                generateReverseSortedArray(size),
+                generateNearlySortedArray(size)
+        };
+        String[] types = {"random", "sorted", "reverse-sorted", "nearly-sorted"};
 
-        // Run the algorithm
-        int[] result = algorithm.findMaxSubarray(arr);
+        for (int i = 0; i < arrays.length; i++) {
+            algorithms.KadanesAlgorithm algorithm = new algorithms.KadanesAlgorithm();
+            metrics.PerformanceTracker tracker = algorithm.getPerformanceTracker();
+            int[] result = algorithm.findMaxSubarray(arrays[i]);
+            tracker.saveToCSV("data/benchmark_results_" + types[i] + ".csv", size);
+        }
 
-        // Save results to CSV
-        tracker.saveToCSV("data/benchmark_results.csv", size);
     }
+
+    private static int[] generateSortedArray(int size) {
+        int[] arr = generateRandomArray(size);
+        java.util.Arrays.sort(arr);
+        return arr;
+    }
+
+    private static int[] generateReverseSortedArray(int size) {
+        int[] arr = generateSortedArray(size);
+        for (int i = 0; i < arr.length / 2; i++) {
+            int tmp = arr[i];
+            arr[i] = arr[arr.length - 1 - i];
+            arr[arr.length - 1 - i] = tmp;
+        }
+        return arr;
+    }
+
+    private static int[] generateNearlySortedArray(int size) {
+        int[] arr = generateSortedArray(size);
+        java.util.Random rand = new java.util.Random(42);
+        int swaps = Math.max(1, size / 20);
+        for (int i = 0; i < swaps; i++) {
+            int idx1 = rand.nextInt(size);
+            int idx2 = rand.nextInt(size);
+            int tmp = arr[idx1];
+            arr[idx1] = arr[idx2];
+            arr[idx2] = tmp;
+        }
+        return arr;
+    }
+
 
     /**
      * Generates a random array of the specified size with values between -50 and 49.

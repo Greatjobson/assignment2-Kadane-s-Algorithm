@@ -1,5 +1,0 @@
-size,comparisons,swaps,arrayAccesses,memoryAllocations,executionTimeNs
-100,114,0,199,1,21900
-1000,1064,0,1999,1,158100
-10000,10157,0,19999,1,1029800
-100000,100195,0,199999,1,5155000
