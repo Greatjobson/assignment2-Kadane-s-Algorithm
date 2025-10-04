@@ -7,7 +7,8 @@ assignment2/
 ├── data/                       # Optional: input datasets
 ├── data-before_optimization/   # Optional: benchmark results before optimization
 ├── docs/
-│   └── performance-plots/                  # Documentation report on your partner’s algorithm
+│   ├── analysis-report.pdf     # Documentation report on your partner’s algorithm
+│   └── performance-plots/      # Time and input size plots for different types of arrays     
 ├── src/
 │   ├── main/
 │   │   ├── java/
