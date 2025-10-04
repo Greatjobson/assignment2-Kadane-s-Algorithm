@@ -1,8 +1,34 @@
 
+## 📁 Project Structure
+
+```
+
+assignment2/
+├── data/                       # Optional: input datasets
+├── data-before_optimization/   # Optional: benchmark results before optimization
+├── docs/
+│   └── performance-plots/                  # Documentation report on your partner’s algorithm
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── algorithms/     # Kadane's Algorithm implementation
+│   │   │   │   └── KadanesAlgorithm.java
+│   │   │   ├── cli/            # Command-line interface / runners
+│   │   │   │   └── BenchmarkRunner.java
+│   │   │   └── metrics/        # Performance tracking tools
+│   │   │       └── PerformanceTracker.java
+│   │   └── resources/          # Optional resource files
+│   └── test/
+│       └── java/
+│           └── algorithms/     # Unit tests
+│               └── KadaneAlgorithmTest.java
+├── .idea/                       # IDE project files
+├── .mvn/                        # Maven wrapper files (if using Maven)
+└── README.md
+
 ---
 
-````markdown
-# 📊 Kadane’s Algorithm Project — v0.1
+# 📊 Kadane’s Algorithm Project — v1.0
 
 ## 🔍 Overview
 This project implements **Kadane’s Algorithm**, a classic and efficient solution for 
@@ -12,6 +38,48 @@ In addition to returning the **maximum sum**, the implementation also provides t
 ```java
 return new int[]{maxSoFar, start, end};
 ````
+
+---
+
+# Usage
+
+## Running Tests (Maven)
+
+```bash
+
+mvn test
+````
+---
+
+## Running Benchmark
+
+The benchmark class is located at `src/main/java/cli/BenchmarkRunner.java`.
+
+### 1. Compile the project
+
+```bash
+mvn compile
+```
+
+### 2. Run the benchmark
+
+**Linux / Mac:**
+
+```bash
+java -cp target/classes cli.BenchmarkRunner
+
+```
+
+**Windows:**
+
+```bash
+java -cp target\classes cli.BenchmarkRunner
+```
+⚠️ Note: The results may vary between runs due to JVM warm-up and system load. 
+For more stable measurements, consider running the benchmark multiple times and averaging the results.
+
+The benchmark results will be printed to the data package
+
 
 ---
 
